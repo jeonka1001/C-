@@ -1,6 +1,6 @@
 //
 //  main.cpp
-//  2-5좌표 연산
+//  2-5좌표 연산
 //
 //  Created by 전경안 on 2020/01/07.
 //  Copyright © 2020 전경안. All rights reserved.
@@ -25,7 +25,7 @@ int main() {
     cin>>p1->xpos>>p1->ypos;
     
     point *p2=new point;
-    cout<<"x좌표를 입력하세요:";
+    cout<<"두번째 x,y좌표를 입력하세요:";
     cin>>p2->xpos>>p2->ypos;
     
     point &psum = pointadd(*p1,*p2);//point 타입의 주소참조변수
