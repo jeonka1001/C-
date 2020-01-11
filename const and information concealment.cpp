@@ -1,7 +1,7 @@
 
 //
 //  main.cpp
-//  4-1 문제 사과장수 보완
+//  4-1 문제 사과장수 보완
 //
 //  Created by 전경안 on 2020/01/11.
 //  Copyright © 2020 전경안. All rights reserved.
