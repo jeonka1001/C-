@@ -4,7 +4,7 @@
 //
 //  Created by 전경안 on 2020/01/13.
 //  Copyright © 2020 전경안. All rights reserved.
-//
+// 생성자와 소멸자
 
 #include <iostream>
 #include <cstring>
