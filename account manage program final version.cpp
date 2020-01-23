@@ -8,11 +8,11 @@
 
 #include <iostream>
 #include <cstring>
-#define NAME_LEN 20
-#define ACC_LEN 20
+#define NAME_LEN 20 //이름의 최대 길이
+#define ACC_LEN 20//계좌번호의 최대 길이
 using namespace std;
 enum{MAKE_ACC=1,DEPOSIT,WITHDRAW,PRINTINFO,ENDPRO};
-class Accountdata{
+class Accountdata{// 1개의 계좌 정보를 저장하는 데이터
 private:
     char *name;
     char *accountnum;
@@ -29,11 +29,11 @@ public:
     ~Accountdata();
 };
 ////////////////////////////
-class Accountmanage
+class Accountmanage //여러개의 계좌 정보를 묶어서 기능을 수행하는 기능함수.
 {
 private:
     int accnum=0;
-    Accountdata *acdata[100];
+    Accountdata *acdata[100];//위 클래스의 배열을 이용하여 여러 개의 계좌 
 public:
     Accountmanage();
     void createacc();
