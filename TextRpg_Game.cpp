@@ -28,11 +28,11 @@ public:
     int returnDEF(void)const;
     int returnMoney(void)const;
     void levelUP();
-    void userBeHit(int eatk);
-    void reinUser(int addatk,int adddef,int addhp,int cnt);
-    void calcmoney(int n);
-    void initHP(int curhp);
-    void display(void)const;
+    void userBeHit(int eatk);//적에게 공격당했을때
+    void reinUser(int addatk,int adddef,int addhp,int cnt);//강화 성공시
+    void calcmoney(int n);//돈 계산
+    void initHP(int curhp);//적과 전투 후 hp 초기화
+    void display(void)const;//상태 출력
 };
 
 class Enemy//적군에 대한 정보//////////////////////////
@@ -46,9 +46,9 @@ public:
     int returnEATK(void)const;
     int returnEHP(void)const;
     int returnEDEF(void)const;
-    void displayEn(void)const;
-    void enemyBeHit(int uatk);
-    void initEHP(int curehp);
+    void displayEn(void)const;//상태 출력
+    void enemyBeHit(int uatk);//유저에게 공격당했을 시
+    //void initEHP(int curehp);
 };
 
 class Dungeon:public Enemy{//던전 입장
@@ -69,11 +69,11 @@ private:
     int luck;
 public:
     Reinforce(int cnt):luck(0),addatk(4),adddef(2),addhp(10),count(1*cnt){}
-    int reintry(UserInfo &ui);
-    void reinstore(UserInfo &ui);
+    int reintry(UserInfo &ui);//강화 시도
+    void reinstore(UserInfo &ui);//강화석 구매 함수
 };
 
-int jackPot(int money);
+int jackPot(int money);//잭 팟!
 void showMenu(void);//메뉴 출력 함수
 int selectMenu(void);//메뉴 선택 함수
 
@@ -185,9 +185,9 @@ int Enemy::returnEDEF(void)const{
 void Enemy::enemyBeHit(int uatk){
     ehp=ehp - ( uatk - edef);
 }
-void Enemy::initEHP(int curehp){
+/*void Enemy::initEHP(int curehp){
     ehp=curehp;
-}
+}*/
 void Enemy::displayEn(void)const{
     cout<<"[[[적군 정보]]]"<<endl;
     cout<<"ATK :"<<eatk<<endl;
