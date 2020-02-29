@@ -9,9 +9,7 @@
 #include "Chattroom.h"
 
 void Chattroom::addMessage(std::string message,bool check){
-    Chat temp;
-    temp.sendM(message,check);
-    this->chatting.push_back(temp);
+    chatting.push_back(Chat(check,message));
 }
 void Chattroom::prnMessage(){
     for(auto a: this->chatting){
@@ -20,4 +18,7 @@ void Chattroom::prnMessage(){
 }
 std::string Chattroom::getName(){
     return this->name;
+}
+Chattroom& Chattroom::myChattroom(){
+    return *this;
 }
