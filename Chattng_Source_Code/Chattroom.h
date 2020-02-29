@@ -18,11 +18,14 @@ private:
     std::string name;// 누구와의 채팅방인지 체크할 변수
 public:
     Chattroom(std::string name="주인없음",bool check=false,std::string message="채팅방이 개설되었습니다.")
-    :Chat(check,message),name(name){ }
+    :name(name){
+        chatting.push_back(Chat(check,message));
+    }
     ~Chattroom(){}
     void addMessage(std::string message,bool check);
     void prnMessage();
     std::string getName();
+    Chattroom& myChattroom();
 };
 
 

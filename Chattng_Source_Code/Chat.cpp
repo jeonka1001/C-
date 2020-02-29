@@ -8,21 +8,14 @@
 
 #include "Chat.h"
 
-void Chat::writeM(std::string message){
-    this->message=message;
-}
-///false == 보냄 , true = 받음
-void Chat::setCheck(bool check){
-    this->check = check;
-}
+
 void Chat::prnMessage(){
-    std::cout.precision(20);
     if(check == false){ // 보낸 문자는 오른쪽 정렬
-        std::cout.setf(std::ios::right,std::ios::adjustfield);
-        std::cout << this->message<<std::endl;
+        std::cout <<std::right;
+        std::cout <<std::setw(40)<< this->message<<" << ME"<<std::endl;
     }
     else{ // 받은 문자의 경우 왼쪽정렬
-        std::cout.setf(std::ios::left,std::ios::adjustfield);
-        std::cout << this->message<<std::endl;
+        std::cout <<std::left;
+        std::cout<<"OTHER >> "<<std::setw(40)<< this->message<<std::endl;
     }
 }

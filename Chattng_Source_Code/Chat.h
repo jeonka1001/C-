@@ -10,6 +10,7 @@
 #define Chat_h
 #include <iostream>
 #include <string>
+#include <iomanip>
 
 class Chat{
 private:
@@ -19,14 +20,7 @@ public:
     Chat(){}
     Chat(bool check,std::string message):check(check),message(message){}
     virtual ~Chat(){}
-    void writeM(std::string);
-    void setCheck(bool);
     void prnMessage();
-    
-    void sendM(std::string message,bool check){
-        setCheck(check);
-        writeM(message);
-    }
 };
 
 #endif /* Chat_h */
