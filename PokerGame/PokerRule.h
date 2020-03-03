@@ -10,11 +10,12 @@
 #define PokerRule_h
 
 #include <iostream>
+#include <vector>
 #include "Player.h"
 #include <algorithm>
 class Rule{
 public:
-    enum{TOP,ONE_PAIR,TWO_PAIR,TRIPLE,STRAIGHT,
+    enum{TOP=0,ONE_PAIR,TWO_PAIR,TRIPLE,STRAIGHT,
         BACK_STRAIGHT,MOUNTAIN,
         FLUSH,FULL_HOUSE,FOUR_CARD,
         STRAIGHT_FLUSH,
@@ -29,11 +30,11 @@ public:
     bool flush(Card*(&)[MAX_CARD])const;
     bool mountain(Card*(&)[MAX_CARD])const;
     bool backStraight(Card*(&)[MAX_CARD])const;
-    bool straight(Card*(&)[MAX_CARD])const;
-    bool triple(Card*(&)[MAX_CARD])const;
-    bool twopair(Card*(&)[MAX_CARD])const;
-    bool onepair(Card*(&)[MAX_CARD])const;
-    int numPair(int(&)[MAX_CARD])const;
-    bool shapePair(Card*,Card*)const;
+    
+    int straight(std::vector<int>);
+  
+    
+    int numPair(Card*(&)[MAX_CARD]);
+    int shapePair(Card*(&)[MAX_CARD]);
 };
 #endif /* PokerRule_hpp */

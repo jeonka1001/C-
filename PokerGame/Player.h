@@ -12,8 +12,9 @@
 #include <iostream>
 #include "Card.h"
 #include "PokerRule.h"
-#define MAX_CARD 6
-class Player:public Rule{
+#define MAX_CARD 7
+class Player:public Rule
+{
 private:
     Card *(myCard[MAX_CARD]);
     int money;

@@ -17,42 +17,34 @@ bool Rule::backStraightFlush(Card*(&card)[MAX_CARD])const{
 bool Rule::StraightFlush(Card*(&card)[MAX_CARD])const{
     
 }
-bool Rule::fourCard(Card*(&card)[MAX_CARD])const{
-    
-}
-bool Rule::fullHouse(Card*(&card)[MAX_CARD])const{
-    
-}
-bool Rule::flush(Card*(&card)[MAX_CARD])const{
-    
-}
-bool Rule::mountain(Card*(&card)[MAX_CARD])const{
-    
-}
-bool Rule::backStraight(Card*(&card)[MAX_CARD])const{
-    
-}
-bool Rule::straight(Card*(&card)[MAX_CARD])const{
-    
-}
-bool Rule::triple(Card*(&card)[MAX_CARD])const{
-    
-}
-bool Rule::twopair(Card*(&card)[MAX_CARD])const{
-    
-}
-bool Rule::onepair(Card*(&card)[MAX_CARD])const{
-    int num[MAX_CARD],i=0,check[MAX_CARD];
-    for(auto a:card){
-        num[i]=a->getNum();
-        i++;
+int Rule::straight(std::vector<int> num){
+    int check[MAX_CARD]={1,};
+    for(int a=0;a<MAX_CARD-1;a++){
+        if(num[a+1]-num[a]==1){
+            check[a+1]+=check[a];
+            
+        }
     }
-    std::sort(num[0],num[MAX_CARD-1]);
-    
+    for(int i=0;i<MAX_CARD;i++){
+        if(check[i]==5&&num[i]==5&&num[0]==1){
+            return BACK_STRAIGHT;
+        }
+        if(check[i]>=4&&num[i]==13&&num[0]==1){
+            return MOUNTAIN;
+        }
+        if(check[i]>=5){
+            return STRAIGHT;
+        }
+    }
+    return 0;
 }
-
-int Rule::numPair(int (&num)[MAX_CARD])const{
+int Rule::numPair(Card*(&card)[MAX_CARD]){
     int check[MAX_CARD]={1,},add=0,max=1;
+    std::vector<int> num;
+    for(auto a:card){
+        num.push_back(a->getNum());
+    }
+    std::sort(num.begin(),num.end());
     for(int i=0;i<MAX_CARD-1;i++){
         if(num[i]==num[i+1]){
             check[i+1]+=check[i];
@@ -69,6 +61,7 @@ int Rule::numPair(int (&num)[MAX_CARD])const{
     }
     switch(max){
         case 1:
+            if(straight(num)!=0)return STRAIGHT;
             return TOP;
         case 2:
             if(add>=4)return TWO_PAIR;
@@ -81,7 +74,27 @@ int Rule::numPair(int (&num)[MAX_CARD])const{
             return FOUR_CARD;
     }
 }
-bool Rule::shapePair(Card*card1,Card*card2)const{
-    if(card1->getShape() == card2->getShape())return true;
-    else return false;
+
+int Rule::shapePair(Card*(&card)[MAX_CARD])//스트레이트 플러쉬 구현 방법 찾기
+{
+    int check[MAX_CARD]={1,},i=0;
+    std::vector<int> shape;
+    for(auto a:card){
+        shape[i]=a->getShape();
+        i++;
+    }
+    std::sort(shape.begin(),shape.end());
+    for(int i=0;i<MAX_CARD-1;i++){
+        if(shape[i]==shape[i+1]){
+            check[i+1]+=check[i];
+            check[i]=0;
+        }
+    }
+    for(int i=0;i<MAX_CARD;i++){
+        if(check[i]==5){
+            return shape[i];
+        }
+    }
+    return -1;
+
 }
