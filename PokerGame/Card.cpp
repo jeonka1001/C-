@@ -23,12 +23,12 @@ void Card::setNum(int num){
 void Card::prnCard(){
     switch(this->shape){
         case C:
-            std::cout <<"Cover"<<num<<"/";
+            std::cout <<"♧"<<num<<"/";
         case H:
-            std::cout <<"Heart"<<num<<"/";
+            std::cout <<"♡"<<num<<"/";
         case D:
-            std::cout <<"Diamond"<<num<<"/";
+            std::cout <<"♢"<<num<<"/";
         case S:
-            std::cout <<"Spade"<<num<<"/";
+            std::cout <<"♤"<<num<<"/";
     }
 }
