@@ -75,7 +75,7 @@ int Rule::numPair(Card*(&card)[MAX_CARD]){
     }
 }
 
-int Rule::shapePair(Card*(&card)[MAX_CARD])//스트레이트 플러쉬 구현 방법 찾기
+int Rule::shapePair(Card*(&card)[MAX_CARD])//스트레이트 플러쉬 구현 방법 찾기 아마numpair에서 수행
 {
     int check[MAX_CARD]={1,},i=0;
     std::vector<int> shape;
