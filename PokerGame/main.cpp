@@ -7,9 +7,37 @@
 //
 
 #include <iostream>
+#include <random>
 
+#include "Player.h"
+//#include "PokerRule.h"
 
+void settingCard(Player &i);
+//void betting(Player&i);
+int randNum();//숫자 결정
+int randShape();// 모양 결정
 int main(int argc, const char * argv[]) {
+    Player i;
+    srand((unsigned int)time(NULL));
+    while(i.getNumber()!=MAX_CARD){
+        settingCard(i);
+        //betting(i);
+    }
+    i.prnCard();
     
     return 0;
 }
+
+void settingCard(Player &i){
+    int num;
+    int shape;
+    while(1){
+        num=randNum();
+        shape=randShape();
+        if(i.setCard(shape, num)){
+            return ;
+        }
+    }
+}
+int randNum(){return (rand()%13)+1;}
+int randShape(){return (rand()%4)+1;}
