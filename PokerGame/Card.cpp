@@ -24,11 +24,19 @@ void Card::prnCard(){
     switch(this->shape){
         case C:
             std::cout <<"♧"<<num<<"/";
+            break;
         case H:
             std::cout <<"♡"<<num<<"/";
+            break;
         case D:
             std::cout <<"♢"<<num<<"/";
+            break;
         case S:
             std::cout <<"♤"<<num<<"/";
+            break;
     }
+}
+void Card::operator=(Card *&card1){
+    this->shape = card1->shape;
+    this->num = card1->num;
 }

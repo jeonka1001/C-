@@ -7,94 +7,194 @@
 //
 
 #include "PokerRule.h"
-
-bool Rule::royalStraightFlush(Card*(&card)[MAX_CARD])const{
+using std::cout;
+using std::endl;
+int Rule::straight(Card*(&card)[MAX_CARD]){
+    int check[MAX_CARD]={1,},flushCheck=1,topNum=0;
     
-}
-bool Rule::backStraightFlush(Card*(&card)[MAX_CARD])const{
-    
-}
-bool Rule::StraightFlush(Card*(&card)[MAX_CARD])const{
-    
-}
-int Rule::straight(std::vector<int> num){
-    int check[MAX_CARD]={1,};
-    for(int a=0;a<MAX_CARD-1;a++){
-        if(num[a+1]-num[a]==1){
-            check[a+1]+=check[a];
-            
+    for(int i=0;i<MAX_CARD-1;i++){
+        if((card[i+1]->getNum()-card[i]->getNum())==1){
+            check[i+1]+=check[i];
+            check[i]=0;
+            topNum=i;
+            if(card[i+1]->getShape() == card[i]->getShape()){
+                flushCheck++;
+            }
         }
     }
     for(int i=0;i<MAX_CARD;i++){
-        if(check[i]==5&&num[i]==5&&num[0]==1){
-            return BACK_STRAIGHT;
+        if(check[i]==5&&card[i]->getNum()==5&&card[0]->getNum()==1){
+            if(flushCheck == 5){
+                return (card[i]->getShape()*SHAPE_NUM)+(card[topNum]->getNum()*TOP_NUM)+BACK_STRAIGHT_FLUSH;
+            }
+            return (card[i]->getShape()*SHAPE_NUM)+(card[topNum]->getNum()*TOP_NUM)+BACK_STRAIGHT;
         }
-        if(check[i]>=4&&num[i]==13&&num[0]==1){
-            return MOUNTAIN;
+        if(check[i]>=4&&card[i]->getNum()==13&&card[0]->getNum()==1){
+            if(flushCheck == 4&&card[i]->getShape()==card[0]->getShape()){
+                return (card[i]->getShape()*SHAPE_NUM)+(card[topNum]->getNum()*TOP_NUM)+ROYAL_STRAIGHT_FLUSH;
+            }
+                return (card[i]->getShape()*SHAPE_NUM)+(card[topNum]->getNum()*TOP_NUM)+MOUNTAIN;
         }
         if(check[i]>=5){
-            return STRAIGHT;
-        }
-    }
-    return 0;
-}
-int Rule::numPair(Card*(&card)[MAX_CARD]){
-    int check[MAX_CARD]={1,},add=0,max=1;
-    std::vector<int> num;
-    for(auto a:card){
-        num.push_back(a->getNum());
-    }
-    std::sort(num.begin(),num.end());
-    for(int i=0;i<MAX_CARD-1;i++){
-        if(num[i]==num[i+1]){
-            check[i+1]+=check[i];
-            check[i]=0;
-        }
-    }
-    for(auto a:check){
-        if(max<a){
-            max=a;
-        }
-        if(a>1){
-            add+=a;
-        }
-    }
-    switch(max){
-        case 1:
-            if(straight(num)!=0)return STRAIGHT;
-            return TOP;
-        case 2:
-            if(add>=4)return TWO_PAIR;
-            else return ONE_PAIR;
-            break;
-        case 3:
-            if(add>=5)return FULL_HOUSE;
-            else return TRIPLE;
-        case 4:
-            return FOUR_CARD;
-    }
-}
-
-int Rule::shapePair(Card*(&card)[MAX_CARD])//스트레이트 플러쉬 구현 방법 찾기
-{
-    int check[MAX_CARD]={1,},i=0;
-    std::vector<int> shape;
-    for(auto a:card){
-        shape[i]=a->getShape();
-        i++;
-    }
-    std::sort(shape.begin(),shape.end());
-    for(int i=0;i<MAX_CARD-1;i++){
-        if(shape[i]==shape[i+1]){
-            check[i+1]+=check[i];
-            check[i]=0;
-        }
-    }
-    for(int i=0;i<MAX_CARD;i++){
-        if(check[i]==5){
-            return shape[i];
+            if(flushCheck == 5){
+                return (card[i]->getShape()*SHAPE_NUM)+(card[topNum]->getNum()*TOP_NUM)+STRAIGHT_FLUSH;
+            }
+            return (card[i]->getShape()*SHAPE_NUM)+(card[topNum]->getNum()*TOP_NUM)+STRAIGHT;
         }
     }
     return -1;
+}
+int Rule::numPair(Card*(&card)[MAX_CARD]){
+    
+    int pairCheck[MAX_CARD]={1,},topNum=0;
+    for(int i=0;i<MAX_CARD-1;i++){
+        if(card[i]->getNum()==card[i+1]->getNum()){
+            pairCheck[i+1]+=pairCheck[i];
+            pairCheck[i]=0;
+            topNum=i+1;
+        }
+    }
+    int max=1,add=0;
+    for(int i=0;i<MAX_CARD;i++){
+        if(max<pairCheck[i]){
+            max=pairCheck[i];
+            add+=pairCheck[i];
+        }
+    }
+    int fl=flush(card);
+    switch(max){
+        case 1:
+            if(fl==-1)return (card[topNum]->getShape()*SHAPE_NUM)+(card[topNum]->getNum()*TOP_NUM)+TOP;
+            break;
+        case 2:
+            if(fl==-1){
+                if(add>=4){
+                    return (card[topNum]->getShape()*SHAPE_NUM)+(card[topNum]->getNum()*TOP_NUM)+TWO_PAIR;
+                }
+                else return (card[topNum]->getShape()*SHAPE_NUM)+(card[topNum]->getNum()*TOP_NUM)+ONE_PAIR;
+            }
+            break;
+        case 3:
+            if(add>=5)return (card[topNum]->getShape()*SHAPE_NUM)+(card[topNum]->getNum()*TOP_NUM)+FULL_HOUSE;
+            if(fl==-1){
+                return (card[topNum]->getShape()*SHAPE_NUM)+(card[topNum]->getNum()*TOP_NUM)+TRIPLE;
+            }
+            break;
+        case 4:
+            return (card[topNum]->getShape()*SHAPE_NUM)+(card[topNum]->getNum()*TOP_NUM)+FOUR_CARD;
+    }
+    return fl;
+}
 
+int Rule::flush(Card*(&card)[MAX_CARD])
+{
+    int check[4]={0,};
+    for(int i=0;i<MAX_CARD;i++){
+        check[card[i]->getShape()-1]++;
+        if(check[card[i]->getShape()-1]>=5){
+            return (card[i]->getShape()*SHAPE_NUM)+(card[i]->getNum()*TOP_NUM)+FLUSH;
+        }
+    }
+    return -1;
+}
+
+void Rule::cardSort(Card*(&card)[MAX_CARD]){
+    int minNum=0;
+    while(minNum!=(MAX_CARD-1)){
+        for(int i=minNum;i<MAX_CARD;i++){
+            if(card[minNum]->getNum() > card[i]->getNum()){
+                cardSwap(card[minNum],card[i]);
+            }
+        }
+        minNum++;
+    }
+}
+void Rule::cardSwap(Card*&card1,Card*&card2){
+    Card temp;
+    temp = card2;
+    card2 = card1;
+}
+void Rule::prnSol(Card*(&card)[MAX_CARD]){
+    cardSort(card);
+    int solCheck=straight(card);
+    int shape,top;
+    if(solCheck!=-1){
+        calcSol(shape,top,solCheck);
+    }
+    else{
+        solCheck=numPair(card);
+        calcSol(shape,top,solCheck);
+    }
+    switch(shape){
+        case C:
+            prnVal(solCheck);
+            std::cout << "TOP : CLOVER " << top <<std::endl;
+            break;
+        case H:
+            prnVal(solCheck);
+            std::cout << "TOP : HEART " << top <<std::endl;
+            break;
+        case D:
+            prnVal(solCheck);
+            std::cout << "TOP : DIAMOND " << top <<std::endl;
+            break;
+        case S:
+            prnVal(solCheck);
+            std::cout << "TOP : SPADE " << top <<std::endl;
+            break;
+    }
+
+}
+
+void Rule::calcSol(int &shape,int &top,int &solCheck){
+    shape=solCheck/SHAPE_NUM;
+    solCheck-=shape*SHAPE_NUM;
+    top=solCheck/TOP_NUM;
+    solCheck-=top*TOP_NUM;
+}
+
+void Rule::prnVal(int n){
+    switch(n){
+        case TOP:
+            cout <<" NO PAIR ";
+            break;
+        case ONE_PAIR:
+            cout << " ONE PAIR ";
+            break;
+        case TWO_PAIR:
+            cout << " TWO PAIR ";
+            break;
+        case TRIPLE:
+            cout << " TRIPLE ";
+            break;
+        case STRAIGHT:
+            cout <<" STRAIGHT ";
+            break;
+        case BACK_STRAIGHT:
+            cout <<" BACK STRAIGHT ";
+            break;
+        case MOUNTAIN:
+            cout <<" MOUNTAIN " ;
+            break;
+        case FLUSH:
+            cout <<" FLUSH " ;
+            break;
+        case FULL_HOUSE:
+            cout <<" FULL HOUSE ";
+            break;
+        case FOUR_CARD:
+            cout << " FOUR CARD ";
+            break;
+        case STRAIGHT_FLUSH:
+            cout << " STRAIGHT FLUSH ";
+            break;
+        case BACK_STRAIGHT_FLUSH:
+            cout << " BACK STRAGIHT FLUSH ";
+            break;
+        case ROYAL_STRAIGHT_FLUSH:
+            cout << " ROYAL STRAGIHT FLUSH ";
+            break;
+        default:
+            break;
+    }
 }

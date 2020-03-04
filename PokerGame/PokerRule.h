@@ -11,8 +11,8 @@
 
 #include <iostream>
 #include <vector>
-#include "Player.h"
-#include <algorithm>
+#include "Card.h"
+
 class Rule{
 public:
     enum{TOP=0,ONE_PAIR,TWO_PAIR,TRIPLE,STRAIGHT,
@@ -22,19 +22,16 @@ public:
         BACK_STRAIGHT_FLUSH,
         ROYAL_STRAIGHT_FLUSH
     };
-    bool royalStraightFlush(Card*(&)[MAX_CARD])const;
-    bool backStraightFlush(Card*(&)[MAX_CARD])const;
-    bool StraightFlush(Card*(&)[MAX_CARD])const;
-    bool fourCard(Card*(&)[MAX_CARD])const;
-    bool fullHouse(Card*(&)[MAX_CARD])const;
-    bool flush(Card*(&)[MAX_CARD])const;
-    bool mountain(Card*(&)[MAX_CARD])const;
-    bool backStraight(Card*(&)[MAX_CARD])const;
-    
-    int straight(std::vector<int>);
-  
+    int straight(Card*(&)[MAX_CARD]);
     
     int numPair(Card*(&)[MAX_CARD]);
-    int shapePair(Card*(&)[MAX_CARD]);
+    int flush(Card*(&card)[MAX_CARD]);
+    
+    void cardSort(Card*(&)[MAX_CARD]);
+    void cardSwap(Card*&card1,Card*&card2);
+    
+    void prnSol(Card*(&card)[MAX_CARD]);
+    void prnVal(int);
+    void calcSol(int&,int&,int&);
 };
 #endif /* PokerRule_hpp */
