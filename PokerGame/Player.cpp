@@ -9,8 +9,8 @@
 #include "Player.h"
 
 Player::Player():money(100000),number(0){
-    for(int i=0;i<6;i++){
-        myCard[i] = NULL;
+    for(int i=0;i<MAX_CARD;i++){
+        myCard[i] = new Card;
     }
 }
 /*====================
@@ -26,8 +26,17 @@ void Player::prnCard(){
 /*====================
  사용자가 카드 한장을 부여받음.
  =======================*/
-void Player::setCard(int shape,int num){
-    myCard[number++]= new Card(shape,num);
+bool Player::setCard(int shape,int num){
+    if(number == MAX_CARD)return false;
+    for(auto a:myCard){
+        if(a->getNum()==num&&a->getShape()==shape){
+            return false;
+        }
+    }
+    myCard[number]->setNum(num);
+    myCard[number]->setShape(shape);
+    number++;
+    return true;
 }
 /*====================
  사용자의 돈을 설정 (입력받은 금액만큼 돈이 초기화 됨)
@@ -49,7 +58,7 @@ int Player::getMoney(){
     return this->money;
 }
 /*====================
- 사용자가 배팅을 한다.
+ 사용자가 베팅을 한다.
  m = 이전 사람이 배팅한 금액.
  =======================*/
 int Player::call(int m){
@@ -57,7 +66,7 @@ int Player::call(int m){
     return m;
 }
 /*====================
- 사용자가 배팅을 한다.
+ 사용자가 베팅을 한다.
  자신의 현재 금액의 절반.
  =======================*/
 int Player::half(){
@@ -65,8 +74,6 @@ int Player::half(){
     return this->money;
 }
 
-void Player::prnMySol(){
-    if(royalStraightFlush(myCard)){
-        
-    }
+void Player::prnSsol(){
+    game.prnSol(myCard);
 }
