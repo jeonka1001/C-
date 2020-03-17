@@ -10,7 +10,7 @@
 #include <random>
 
 #include "Player.h"
-//#include "PokerRule.h"
+#include "PokerRule.h"
 
 void settingCard(Player &i);
 //void betting(Player&i);
@@ -21,9 +21,11 @@ int main(int argc, const char * argv[]) {
     srand((unsigned int)time(NULL));
     while(i.getNumber()!=MAX_CARD){
         settingCard(i);
+        
         //betting(i);
     }
     i.prnCard();
+    i.prnSsol();
     
     return 0;
 }
@@ -31,10 +33,13 @@ int main(int argc, const char * argv[]) {
 void settingCard(Player &i){
     int num;
     int shape;
+    bool check;
     while(1){
         num=randNum();
         shape=randShape();
-        if(i.setCard(shape, num)){
+        std::cout << "shape : "<< shape<<std::endl;
+        check = i.setCard(shape, num);
+        if(check){
             return ;
         }
     }

@@ -21,7 +21,9 @@
 #define C 1
 #define SHAPE_NUM 10000
 #define TOP_NUM 100
+
 #define MAX_CARD 7
+
 class Card{
 private:
     int shape;
@@ -33,6 +35,6 @@ public:
     void setShape(int shape);
     void setNum(int num);
     void prnCard();
-    void operator=(Card*&card1);
+    void operator=(Card card1);
 };
 #endif /* Card_h */
