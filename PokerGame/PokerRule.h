@@ -22,16 +22,16 @@ public:
         BACK_STRAIGHT_FLUSH,
         ROYAL_STRAIGHT_FLUSH
     };
-    int straight(Card*(&)[MAX_CARD]);
+    int straight(Card*(&)[MAX_CARD])const;
     
-    int numPair(Card*(&)[MAX_CARD]);
-    int flush(Card*(&card)[MAX_CARD]);
+    int numPair(Card*(&)[MAX_CARD])const;
+    int flush(Card*(&card)[MAX_CARD])const;
     
-    void cardSort(Card*(&)[MAX_CARD]);
-    void cardSwap(Card*&card1,Card*&card2);
+    void cardSort(Card*(&)[MAX_CARD])const;
+    void cardSwap(Card*&card1,Card*&card2)const;
     
-    void prnSol(Card*(&card)[MAX_CARD]);
-    void prnVal(int);
-    void calcSol(int&,int&,int&);
+    void prnSol(Card*(&card)[MAX_CARD])const;
+    void prnVal(int)const;
+    void calcSol(int&,int&,int&)const;
 };
 #endif /* PokerRule_hpp */

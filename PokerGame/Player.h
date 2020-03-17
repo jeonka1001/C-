@@ -22,11 +22,11 @@ private:
     Rule game;
 public:
     Player();
-    ~Player(){
-        for(int i=0;i<MAX_CARD;i++){
-            delete myCard[i];
-        }
-    }
+//    ~Player(){
+//        for(int i=0;i<MAX_CARD;i++){
+//            delete myCard[i];
+//        }
+//    }
     void prnCard();
     bool setCard(int shape,int num);
     void setMoney(int money);

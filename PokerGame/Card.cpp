@@ -16,6 +16,7 @@ int Card::getNum(){
 }
 void Card::setShape(int shape){
     this->shape=shape;
+    std:: cout << shape<<std::endl;
 }
 void Card::setNum(int num){
     this->num = num;
@@ -23,20 +24,20 @@ void Card::setNum(int num){
 void Card::prnCard(){
     switch(this->shape){
         case C:
-            std::cout <<"♧"<<num<<"/";
+            std::cout <<"♧"<<num<<" ";
             break;
         case H:
-            std::cout <<"♡"<<num<<"/";
+            std::cout <<"♡"<<num<<" ";
             break;
         case D:
-            std::cout <<"♢"<<num<<"/";
+            std::cout <<"♢"<<num<<" ";
             break;
         case S:
-            std::cout <<"♤"<<num<<"/";
+            std::cout <<"♤"<<num<<" ";
             break;
     }
 }
-void Card::operator=(Card *&card1){
-    this->shape = card1->shape;
-    this->num = card1->num;
+void Card::operator=(Card card1){
+    this->shape = card1.shape;
+    this->num = card1.num;
 }

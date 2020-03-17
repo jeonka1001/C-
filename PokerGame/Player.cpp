@@ -27,16 +27,16 @@ void Player::prnCard(){
  사용자가 카드 한장을 부여받음.
  =======================*/
 bool Player::setCard(int shape,int num){
-    if(number == MAX_CARD)return false;
-    for(auto a:myCard){
-        if(a->getNum()==num&&a->getShape()==shape){
+    if(number == MAX_CARD)return true;
+    for(int i=0;i<number;i++){
+        if(myCard[i]->getNum()==num && myCard[i]->getShape()==shape){
             return false;
         }
     }
     myCard[number]->setNum(num);
     myCard[number]->setShape(shape);
     number++;
-    return true;
+    return false;
 }
 /*====================
  사용자의 돈을 설정 (입력받은 금액만큼 돈이 초기화 됨)
